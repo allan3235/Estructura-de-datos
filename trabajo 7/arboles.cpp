@@ -5,6 +5,7 @@ int main()
     int inic = 0;
     int menu = 0;
     int datonuevo;
+    int datoeliminar;
 
      do
      {
@@ -27,6 +28,10 @@ int main()
         case 4:
             Inorder(raiz);
             break;
+        case 5:
+            printf("Ingresa el dato que desea eliminar\n");
+            scanf("%d",&datoeliminar);
+            eliminar(raiz,datoeliminar);
             
         default:
          break;

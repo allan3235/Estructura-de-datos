@@ -1,3 +1,4 @@
 *.exe
 #No publica lo que hay en .vscode ya que no es necesario 
 .vscode/
+*.exe

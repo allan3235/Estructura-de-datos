@@ -13,7 +13,8 @@ void msg1()
     printf("1-Agregar\n");
     printf("2-Imprimir posOrder\n");
     printf("3-Imprimir Preorder\n");
-    printf("4-Inorder\n");
+    printf("4-Imprimir Inorder\n");
+    printf("5-Eliminar\n");
     printf("-1-Salir\n");
 
 }
@@ -51,7 +52,7 @@ void preorden(struct arboles *raiz)
     {  
        return;
     }
-    printf("%d", raiz->dat); //Se imprime raiz
+    printf("%d ", raiz->dat); //Se imprime raiz
     preorden(raiz->izq);
     preorden(raiz->der);
 }
@@ -63,7 +64,7 @@ void Inorder(struct arboles *raiz)
        return;
     }
     Inorder(raiz->izq);
-    printf("%d", raiz->dat); //Se imprime raiz
+    printf("%d ", raiz->dat); //Se imprime raiz
     Inorder(raiz->der);
     
 }
@@ -76,8 +77,65 @@ void posorden(struct arboles *raiz)
     }
     posorden(raiz->izq);
     posorden(raiz->der);
-    printf("%d", raiz->dat); //Se imprime raiz
+    printf("%d ", raiz->dat); //Se imprime raiz
 
 }
+struct arboles *minimo(struct arboles *raiz) 
+{
+    while (raiz->izq != NULL) 
+    {
+        raiz = raiz->izq;
+    }
+    return raiz;
+}
 
+struct arboles *eliminar(struct arboles *raiz, int dat)
+{
+    if (raiz == NULL)
+    {
+        return NULL; // No hace nada si la raiz es NULL o no se encuentra el valor
+    }
+    if (dat < raiz->dat)
+    {
+        raiz->izq = eliminar(raiz->izq, dat);
+    }
+    else
+    {
+        if (dat > raiz->dat)
+        {
+            raiz->der = eliminar(raiz->der, dat);
+        }
+        else
+        {
+            // Se encontro el nodo
+            if (raiz->izq == NULL && raiz->der == NULL)
+            {
+                free(raiz);
+                return NULL;
+            }
+            if (raiz->izq == NULL)
+            {
+                struct arboles *temp = raiz->der;
+                free(raiz);
+                return temp;
+            }
+            else
+            {
+                if (raiz->der == NULL)
+                {
+                    struct arboles *temp = raiz->izq;
+                    free(raiz);
+                    return temp;
+                }
+                else
+                {
+                    struct arboles *temp = minimo(raiz->der);
+                    raiz->dat = temp->dat;
+                    raiz->der = eliminar(raiz->der, temp->dat);
+                }
+            }
+        }
+    }
+    return raiz;
+}
 
